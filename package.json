@@ -2,11 +2,21 @@
   "name": "fecha-locales",
   "version": "0.1.1",
   "description": "i18n locales for fecha.js",
-  "main": "src/index.js",
   "scripts": {
+    "build-locales": "node ./locale-builder/build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["fecha", "i18n", "fecha-locales"],
+  "keywords": [
+    "fecha",
+    "i18n",
+    "fecha-locales"
+  ],
   "author": "Charanjit Singh (https://channikhabra.github.io/)",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "escodegen": "^1.8.0",
+    "esprima": "^2.7.2",
+    "estemplate": "^0.4.0",
+    "estraverse": "^4.2.0"
+  }
 }

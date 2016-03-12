@@ -1,5 +1,4 @@
 const fecha = require('fecha');
-const fechaLocales = require('fecha-locales');
 
 const tbody = document.getElementById('dates');
 const formats = [
@@ -8,7 +7,13 @@ const formats = [
     'hh:mm A'
 ];
 const date = new Date();
-const locales = Object.keys(fechaLocales);
+const locales = {
+    'en-au': require('fecha-locales/en-au'),
+    'fr': require('fecha-locales/fr'),
+    'es': require('fecha-locales/es')
+};
+
+console.warn('Locales', locales);
 
 const headRow = (() => {
     let row = '<tr>';
@@ -20,8 +25,8 @@ const headRow = (() => {
     return row;
 })();
 
-const localeRows = locales.map((locale) => {
-    fecha.i18n = fechaLocales[locale];
+const localeRows = Object.keys(locales).map((locale) => {
+    fecha.i18n = locales[locale];
 
     let row = '<tr>';
     row += '<td>' + locale + '</td>';
