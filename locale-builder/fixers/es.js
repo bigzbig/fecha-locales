@@ -1,5 +1,3 @@
-const esprima = require('esprima');
-
 module.exports = {
     DoFn: (number) => {
         return number + 'º';

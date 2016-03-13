@@ -54,7 +54,7 @@ module.exports = (momentLocale, name) => {
                     throw new Error('InvalidFixingAst: ' + fixingAst);
                 }                
             } catch(e) {
-                console.warn(`Invalid value for \`${node.key.name}\` of "${name}.js". Please fix it manually.`);
+                console.warn(`Invalid value for \`${fechaName}\` of "${name}.js". Please fix it manually.`);
 
                 if (process.env.DEBUG) {
                     console.error('Error while fixing: ', e);
