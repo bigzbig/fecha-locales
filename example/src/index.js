@@ -8,9 +8,9 @@ const formats = [
 ];
 const date = new Date();
 const locales = {
-    'en-au': require('fecha-locales/en-au'),
-    'fr': require('fecha-locales/fr'),
-    'es': require('fecha-locales/es')
+    'en-au': require('fecha-locales/locales/en-au'),
+    'fr': require('fecha-locales/locales/fr'),
+    'es': require('fecha-locales/locales/es')
 };
 
 console.warn('Locales', locales);
