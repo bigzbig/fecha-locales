@@ -8,7 +8,7 @@ npm install --save fecha-locales
 #+end_src
 *** Browser
 #+begin_src html
-<script src='/path/to/fecha-locales/<locale-name>.js/'></script>
+<script src='/path/to/fecha-locales/<locale-name>.js'></script>
 #+end_src
 ** Usage
 *** Npm
@@ -21,7 +21,7 @@ fecha.i18n = fr;
 #+end_src
 *** Browser
 For browser,
-- Include fecha-modules before your app (i.e script that is going to use fecha-locales).
+- Include fecha-locales before your app (i.e script that is going to use fecha-locales).
 - Doing so will export ~window.fechaLocales~ object
 - You can add multiple locales
 - All the locales you create will be added to ~window.fechaLocales.<localeName>~
