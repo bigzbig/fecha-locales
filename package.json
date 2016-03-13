@@ -1,6 +1,6 @@
 {
   "name": "fecha-locales",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "i18n locales for fecha.js",
   "scripts": {
     "build-locales": "node ./locale-builder/build.js",
