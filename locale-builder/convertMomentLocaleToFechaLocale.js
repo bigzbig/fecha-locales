@@ -28,10 +28,40 @@ module.exports = (momentLocale, name) => {
     };
 
     var hasError = false;
-    const responsiblyGetNodeValue = (node, type) => {
+    const responsiblyGetNodeValue = (node, type, fechaName) => {
         if (node.value.type !== type) {
-            console.warn(`Invalid value for \`${node.key.name}\` of "${name}.js". Please fix it manually.`);
-            hasError = true;
+            try {
+                var fixingCodeStr;
+                
+                const fixingCode = require('./fixers/' + name)[fechaName];
+
+                if (typeof fixingCode === 'string') {
+                    fixingCodeStr = fixingCode;
+                } else if (typeof fixingCode === 'function') {
+                    fixingCodeStr = fixingCode.toString();
+                } else {
+                    fixingCodeStr = JSON.stringify(fixingCode);
+                }
+
+                const fixingAst = esprima.parse(fixingCodeStr).body[0];
+
+                if (fixingAst) {
+                    if (fixingAst.expression) {
+                        return fixingAst.expression;                        
+                    }
+                    return fixingAst;
+                } else {
+                    throw new Error('InvalidFixingAst: ' + fixingAst);
+                }                
+            } catch(e) {
+                console.warn(`Invalid value for \`${node.key.name}\` of "${name}.js". Please fix it manually.`);
+
+                if (process.env.DEBUG) {
+                    console.error('Error while fixing: ', e);
+                }
+
+                hasError = true;
+            }
         }
 
         return node.value;
@@ -42,21 +72,19 @@ module.exports = (momentLocale, name) => {
             if (node.type === 'Property') {
                 switch (node.key.name) {
                 case 'ordinal':
-                    if (node.value.type === 'FunctionExpression') {
-                        templateProps.DoFn = responsiblyGetNodeValue(node, 'FunctionExpression'.value);
-                    }
+                    templateProps.DoFn = responsiblyGetNodeValue(node, 'FunctionExpression', 'DoFn');
                     break;
                 case 'months':
-                    templateProps.monthNames = responsiblyGetNodeValue(node, 'CallExpression');
+                    templateProps.monthNames = responsiblyGetNodeValue(node, 'CallExpression', 'monthNames');
                     break;
                 case 'weekdays':
-                    templateProps.dayNames = responsiblyGetNodeValue(node, 'CallExpression');
+                    templateProps.dayNames = responsiblyGetNodeValue(node, 'CallExpression', 'dayNames');
                     break;
                 case 'weekdaysShort':
-                    templateProps.dayNamesShort = responsiblyGetNodeValue(node, 'CallExpression');
+                    templateProps.dayNamesShort = responsiblyGetNodeValue(node, 'CallExpression', 'weekdaysShort');
                     break;
                 case 'monthsShort':
-                    templateProps.monthNamesShort = responsiblyGetNodeValue(node, 'CallExpression');
+                    templateProps.monthNamesShort = responsiblyGetNodeValue(node, 'CallExpression', 'monthsShort');
                     break;
                 }
             }
