@@ -4,7 +4,7 @@
             'am',
             'pm'
         ],
-        DoFn: number => {
+        DoFn: function (number) {
             return number + 'º';
         },
         dayNames: 'domingo_lunes_martes_miércoles_jueves_viernes_sábado'.split('_'),
